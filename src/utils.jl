@@ -48,3 +48,16 @@ function peakedisotropicspectrum(grid::TwoDGrid{T, A}, kpeak::Real, E₀::Real;
   
   return A(irfft(- grid.Krsq .* ψh, grid.nx))
 end
+
+"""
+    change_params!(problem, new_params)
+
+Redfines a problem using the new parameter structure 'new_params'.
+"""
+
+function change_params!(problem, new_params)
+  new_equation = Equation(new_params, problem.grid)
+  problem.equation = new_equation
+  problem.params = new_params
+  return nothing
+end
