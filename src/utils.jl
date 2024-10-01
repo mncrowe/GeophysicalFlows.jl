@@ -52,7 +52,7 @@ end
 """
     change_params!(problem, new_params)
 
-Redfines a problem using the new parameter structure 'new_params'.
+Updates a problem using the new parameter structure 'new_params'.
 """
 
 function change_params!(problem, new_params)
@@ -60,4 +60,15 @@ function change_params!(problem, new_params)
   problem.equation = new_equation
   problem.params = new_params
   return nothing
+end
+
+"""
+    with_params(problem, new_params)
+
+Recreates a problem using the new parameter structure 'new_params'.
+"""
+
+function with_params(problem, new_params)
+  new_equation = Equation(new_params, problem.grid)
+  return FourierFlows.Problem(new_equation, problem.stepper, problem.dt, problem.grid, problem.vars, new_params)
 end
